@@ -1,0 +1,1 @@
+Android sdk path -/Users/katyakolesnikova/Library/Android/sdk 

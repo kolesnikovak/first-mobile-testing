@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Test results
+test-results/
+playwright-report/
+screenshots/
+
+# Logs
+*.log
+npm-debug.log*
+appium.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+.cache/
+
+# Environment
+.env
+.env.local
