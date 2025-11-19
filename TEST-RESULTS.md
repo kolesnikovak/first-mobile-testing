@@ -6,6 +6,10 @@
 
 All tests are now working correctly when run sequentially. The issue with parallel execution was fixed by updating `playwright.config.ts` to use `workers: 1`.
 
+**Total Tests:** 6  
+**Passing:** 6 ✅  
+**Success Rate:** 100%
+
 ---
 
 ## 📊 Test Results
@@ -89,6 +93,33 @@ All tests are now working correctly when run sequentially. The issue with parall
 
 ---
 
+### ✅ TC-006: Accessibility Custom View Verification
+**File:** `tests/custom-view.spec.ts`  
+**Status:** ✅ PASSED  
+**Duration:** ~28s
+
+**What it tests:**
+- Navigation to Accessibility → Custom View
+- Verification of instructional text with multiple strategies
+- Text content validation with line breaks
+- Screenshot capture at each navigation step
+
+**Expected Text Verified:**
+```
+1. Enable TalkBack (Settings -> Accessibility -> TalkBack). 
+
+2. Enable Explore-by-Touch (Settings -> Accessibility -> Explore by Touch). 
+
+3. Touch explore/poke the buttons.
+```
+
+**Locator Strategies Used:**
+1. 🥇 Accessibility ID for menu navigation
+2. 🥈 UiSelector with textContains for text verification
+3. 🥉 Page source verification as fallback
+
+---
+
 ## 🔧 Fixes Applied
 
 ### 1. **Playwright Configuration**
@@ -119,7 +150,7 @@ export default defineConfig({
 
 ---
 
-## 📸 Screenshots Generated
+### Screenshots Generated:
 
 All tests successfully capture screenshots:
 - ✅ `screenshots/app-launched.png`
@@ -130,6 +161,8 @@ All tests successfully capture screenshots:
 - ✅ `screenshots/accessibility-service.png`
 - ✅ `screenshots/text-menu.png`
 - ✅ `screenshots/linkify-page.png`
+- ✅ `screenshots/accessibility-menu-customview.png`
+- ✅ `screenshots/custom-view-page.png`
 
 ---
 
@@ -216,7 +249,8 @@ Before running tests, ensure:
 | TC-003: Scroll & List | ~15s |
 | TC-004: Accessibility Service | ~24s |
 | TC-005: Linkify Verification | ~23s |
-| **Total** | **~100s (1.7 min)** |
+| TC-006: Custom View Verification | ~28s |
+| **Total** | **~128s (2.1 min)** |
 
 ---
 
@@ -272,4 +306,4 @@ The mobile testing framework is fully functional with all tests passing successf
 
 **Last Updated:** November 18, 2025  
 **Framework Version:** 1.0.0  
-**Test Coverage:** 5 test cases, 100% passing
+**Test Coverage:** 6 test cases, 100% passing
