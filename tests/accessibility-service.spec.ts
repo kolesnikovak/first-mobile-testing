@@ -16,7 +16,7 @@ test.describe('Accessibility Service - Step Validation', () => {
   let driver: Browser;
 
   test.beforeEach(async () => {
-    console.log('\n🚀 Starting test setup...');
+    console.log('\n Starting test setup...');
     
     const deviceName = process.env.DEVICE_NAME || 'emulator-5554';
     const appPath = path.join(__dirname, 'app.apk');
@@ -26,7 +26,7 @@ test.describe('Accessibility Service - Step Validation', () => {
     config = setDeviceName(config, deviceName);
     
     driver = await remote(config);
-    console.log('✅ Setup complete');
+    console.log(' Setup complete');
   });
 
   test.afterEach(async () => {
@@ -36,7 +36,7 @@ test.describe('Accessibility Service - Step Validation', () => {
   });
 
   test('TC-004: Navigate to Accessibility Service and validate steps 1-8', async () => {
-    console.log('\n🧪 Test: Accessibility Service Step Validation');
+    console.log('\n Test: Accessibility Service Step Validation');
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     
     // Wait for app to load
@@ -53,10 +53,10 @@ test.describe('Accessibility Service - Step Validation', () => {
     await driver.pause(1000);
     const screenshot1 = await driver.takeScreenshot();
     require('fs').writeFileSync('screenshots/accessibility-menu.png', screenshot1, 'base64');
-    console.log('📸 Screenshot saved: accessibility-menu.png');
+    console.log(' Screenshot saved: accessibility-menu.png');
     
     // Step 2: Tap "Accessibility Service"
-    console.log('\n📍 Step 2: Tap "Accessibility Service"');
+    console.log('\n Step 2: Tap "Accessibility Service"');
     const accessibilityService = await driver.$('android=new UiSelector().text("Accessibility Service")');
     expect(await accessibilityService.isExisting()).toBeTruthy();
     await accessibilityService.click();
@@ -68,10 +68,10 @@ test.describe('Accessibility Service - Step Validation', () => {
     // Take screenshot of the service page
     const screenshot2 = await driver.takeScreenshot();
     require('fs').writeFileSync('screenshots/accessibility-service.png', screenshot2, 'base64');
-    console.log('📸 Screenshot saved: accessibility-service.png');
+    console.log(' Screenshot saved: accessibility-service.png');
     
     // Step 3: Validate all steps 1-8 are visible as text
-    console.log('\n📍 Step 3: Validate steps 1-8 are visible');
+    console.log('\n Step 3: Validate steps 1-8 are visible');
     console.log('─────────────────────────────────────────');
     
     const stepsToValidate = [
@@ -105,7 +105,7 @@ test.describe('Accessibility Service - Step Validation', () => {
     }
     
     // Get page source for debugging
-    console.log('\n📄 Getting page source for verification...');
+    console.log('\n Getting page source for verification...');
     const pageSource = await driver.getPageSource();
     
     // Count how many steps are actually found in page source
@@ -115,10 +115,10 @@ test.describe('Accessibility Service - Step Validation', () => {
         stepsFoundInSource++;
       }
     }
-    console.log(`📊 Steps found in page source: ${stepsFoundInSource}/8`);
+    console.log(` Steps found in page source: ${stepsFoundInSource}/8`);
     
     // Assertions
-    console.log('\n🔍 Validation Results:');
+    console.log('\n Validation Results:');
     console.log('─────────────────────────────────────────');
     
     const foundCount = validationResults.filter(r => r.found).length;
@@ -134,7 +134,7 @@ test.describe('Accessibility Service - Step Validation', () => {
     
     // Assert all steps are found
     expect(foundCount).toBeGreaterThanOrEqual(8);
-    console.log('\n✅ Test Passed: All steps 1-8 are visible');
+    console.log('\n Test Passed: All steps 1-8 are visible');
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
   });
 });
