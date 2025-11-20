@@ -17,7 +17,7 @@ test.describe('Accessibility - Custom View Verification', () => {
   let driver: Browser;
 
   test.beforeEach(async () => {
-    console.log('\n🚀 Starting test setup...');
+    console.log('\n Starting test setup...');
     
     const deviceName = process.env.DEVICE_NAME || 'emulator-5554';
     const appPath = path.join(__dirname, 'app.apk');
@@ -27,7 +27,7 @@ test.describe('Accessibility - Custom View Verification', () => {
     config = setDeviceName(config, deviceName);
     
     driver = await remote(config);
-    console.log('✅ Setup complete - APIDemos.apk opened');
+    console.log(' Setup complete - APIDemos.apk opened');
   });
 
   test.afterEach(async () => {
@@ -37,14 +37,14 @@ test.describe('Accessibility - Custom View Verification', () => {
   });
 
   test('TC-006: Navigate to Custom View and verify instructional text', async () => {
-    console.log('\n🧪 Test: Accessibility Custom View Verification');
+    console.log('\n Test: Accessibility Custom View Verification');
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     
     // Wait for app to load
     await driver.pause(2000);
     
     // Step 2: Tap 'Accessibility' menu element
-    console.log('\n📍 Step 2: Tap "Accessibility" menu element');
+    console.log('\n Step 2: Tap "Accessibility" menu element');
     const accessibilityMenu = await driver.$('~Accessibility');
     
     const accessibilityExists = await accessibilityMenu.isExisting();
@@ -61,14 +61,14 @@ test.describe('Accessibility - Custom View Verification', () => {
     console.log('📸 Screenshot saved: accessibility-menu-customview.png');
     
     // Step 3: Tap 'Custom View' menu element
-    console.log('\n📍 Step 3: Tap "Custom View" menu element');
+    console.log('\n Step 3: Tap "Custom View" menu element');
     
     // Try finding by accessibility id first
     let customViewMenu = await driver.$('~Custom View');
     let customViewExists = await customViewMenu.isExisting();
     
     if (!customViewExists) {
-      console.log('   ⚠️ Element not found by accessibility id, trying text locator...');
+      console.log('   Element not found by accessibility id, trying text locator...');
       customViewMenu = await driver.$('android=new UiSelector().text("Custom View")');
       customViewExists = await customViewMenu.isExisting();
     }
@@ -85,30 +85,30 @@ test.describe('Accessibility - Custom View Verification', () => {
     // Take screenshot of the Custom View page
     const screenshot2 = await driver.takeScreenshot();
     require('fs').writeFileSync('screenshots/custom-view-page.png', screenshot2, 'base64');
-    console.log('📸 Screenshot saved: custom-view-page.png');
+    console.log(' Screenshot saved: custom-view-page.png');
     
     // Step 4: Verify expected text
-    console.log('\n📍 Step 4: Verify instructional text');
+    console.log('\n Step 4: Verify instructional text');
     console.log('─────────────────────────────────────────');
     
     const expectedText = '1. Enable TalkBack (Settings -> Accessibility -> TalkBack). \n\n2. Enable Explore-by-Touch (Settings -> Accessibility -> Explore by Touch). \n\n3. Touch explore/poke the buttons.';
     
-    console.log('\n🔍 Searching for expected text...');
-    console.log(`📝 Expected: "${expectedText}"`);
+    console.log('\n Searching for expected text...');
+    console.log(` Expected: "${expectedText}"`);
     
     // Try different locator strategies to find the text
     let textFound = false;
     let actualText = '';
     
     // Strategy 1: Find by exact text using UiSelector
-    console.log('\n🔍 Strategy 1: Searching by exact text...');
+    console.log('\n Strategy 1: Searching by exact text...');
     const exactTextElement = await driver.$(`android=new UiSelector().textContains("1. Enable TalkBack")`);
     const exactExists = await exactTextElement.isExisting();
     
     if (exactExists) {
       actualText = await exactTextElement.getText();
       console.log('✓ Text element found by partial text');
-      console.log(`📝 Actual text: "${actualText}"`);
+      console.log(` Actual text: "${actualText}"`);
       textFound = true;
     } else {
       console.log('✗ Not found by exact text');
@@ -116,7 +116,7 @@ test.describe('Accessibility - Custom View Verification', () => {
     
     // Strategy 2: Get page source and search
     if (!textFound) {
-      console.log('\n🔍 Strategy 2: Checking page source...');
+      console.log('\n Strategy 2: Checking page source...');
       const pageSource = await driver.getPageSource();
       
       // Check if the key parts of the text exist in page source
@@ -136,7 +136,7 @@ test.describe('Accessibility - Custom View Verification', () => {
     
     // Strategy 3: Find all TextViews and check their content
     if (!textFound) {
-      console.log('\n🔍 Strategy 3: Searching through all TextViews...');
+      console.log('\n Strategy 3: Searching through all TextViews...');
       const textViews = await driver.$$('android.widget.TextView');
       
       for (const textView of textViews) {
@@ -146,7 +146,7 @@ test.describe('Accessibility - Custom View Verification', () => {
             actualText = text;
             textFound = true;
             console.log('✓ Text element found in TextView');
-            console.log(`📝 Actual text: "${actualText}"`);
+            console.log(` Actual text: "${actualText}"`);
             break;
           }
         } catch (e) {
@@ -156,11 +156,11 @@ test.describe('Accessibility - Custom View Verification', () => {
     }
     
     // Verification
-    console.log('\n📊 Verification Results:');
+    console.log('\n Verification Results:');
     console.log('─────────────────────────────────────────');
     
     if (textFound) {
-      console.log('✅ Expected text found on the page');
+      console.log(' Expected text found on the page');
       
       // Normalize texts for comparison (handle different line break formats)
       const normalizedExpected = expectedText.replace(/\\n/g, '\n').trim();
@@ -179,13 +179,13 @@ test.describe('Accessibility - Custom View Verification', () => {
       expect(containsStep2).toBeTruthy();
       expect(containsStep3).toBeTruthy();
       
-      console.log('\n✅ All steps verified in the text');
+      console.log('\n All steps verified in the text');
     } else {
       console.log('✗ Expected text NOT FOUND');
       
       // Get page source for debugging
       const pageSource = await driver.getPageSource();
-      console.log('\n📄 Page source snippet:');
+      console.log('\n Page source snippet:');
       
       // Extract and show all text content from page source
       const textMatches = pageSource.match(/text="([^"]+)"/g);
@@ -200,14 +200,14 @@ test.describe('Accessibility - Custom View Verification', () => {
     }
     
     // Summary
-    console.log('\n📊 Test Summary:');
+    console.log('\n Test Summary:');
     console.log('─────────────────────────────────────────');
     console.log('✓ Step 1: App opened successfully');
     console.log('✓ Step 2: Navigated to Accessibility menu');
     console.log('✓ Step 3: Navigated to Custom View');
     console.log('✓ Step 4: Verified instructional text');
     
-    console.log('\n✅ Test Passed: Custom View text verification complete');
+    console.log('\n Test Passed: Custom View text verification complete');
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
   });
 });
